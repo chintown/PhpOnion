@@ -1,0 +1,10 @@
+<?php
+    define('AUTH_DB',       '');
+    define('AUTH_TABLE',    '');
+    define('AUTH_USER',     '');
+    define('AUTH_PASS',     '');
+    define('AUTH_SALT',     ''); // deprecated. use random salt
+
+    define('AUTH_FIELD_USER', '');
+    define('AUTH_FIELD_PASS', '');
+?>

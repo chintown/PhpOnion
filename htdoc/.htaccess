@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /'.....'g
+# RewriteRule <system matched path> <uri> <flag>
+RewriteRule (.*) index.php?target=$1 [L,QSA]

@@ -1,0 +1,20 @@
+<?php
+    define('PRODUCTION_HOST', '.....');
+    define('SERVER_HOST', (ENV === 'remote')
+                        ? PRODUCTION_HOST
+                        : 'localhost');
+    define('DB_HOST', (ENV === 'remote')
+                        ? 'localhost'
+                        : PRODUCTION_HOST);
+    define('WEB_HOST',    (ENV === 'remote')
+                        ? SERVER_HOST
+                        : '.....');
+    define('WEB_PATH',    '.....');
+
+    define('WEB_ROOT',    'http://'.WEB_HOST.WEB_PATH);
+    define('STATIC_ROOT', 'http://'.WEB_HOST.WEB_PATH);
+    define('FOLDER_ROOT', '.....'); // source
+    define('IMG_REPO_ROOT', '.....'); // sub: raw/thumb
+
+    ini_set('include_path', ini_get('include_path') . ':' . FOLDER_ROOT); // for require/include
+?>

@@ -1,0 +1,17 @@
+default_chain:
+    - RequestMaker
+    - FileRequestMaker
+    - Renderer
+    - ResponseMaker
+    - MongoRequestMaker
+    - JsonRequestParser
+
+# ------------------------------------------------------------------------------
+# fooo
+
+#fooo_chain:
+#    - Foo
+#fooo:
+#    - RequestMaker
+#    - ResponseMaker
+#    - TestNode
