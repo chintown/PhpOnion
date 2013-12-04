@@ -1,0 +1,23 @@
+## Project specific
+config/pw.php
+config/dev.php
+config/path.php
+
+# PhpStorm specific
+.idea/
+
+# SublimeText specific
+*.sublime-workspace
+*.sublime-project
+
+# Vim specific
+.*.sw[a-z]
+*.un~
+Session.vim
+.netrwhist
+
+# Mac specific
+.DS_Store
+
+# Files that might appear on external disk
+.Trashes
