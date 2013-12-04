@@ -1,10 +1,10 @@
 default_chain:
     - RequestMaker
-    - FileRequestMaker
+    - RequestMakerFile
     - Renderer
     - ResponseMaker
-    - MongoRequestMaker
-    - JsonRequestParser
+    - RequestMakerMongo
+    - RequestParserJson
 
 # ------------------------------------------------------------------------------
 # fooo
