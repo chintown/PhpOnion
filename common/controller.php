@@ -19,7 +19,7 @@
     // load service configuration
     $cwd = dirname(__FILE__).'/';
     require $cwd.'../lib/spyc.php';
-    $conf = spyc_load_file($cwd.'../config/services.yaml');
+    $conf = spyc_load_file(FOLDER_ROOT.'config/services.yaml');
 
     // load base class
     require $cwd.'BaseNode.php';
