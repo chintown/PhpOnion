@@ -75,7 +75,7 @@
             if (file_exists($node_file)) {
                 include $node_file;
             } else {
-                $node_file = $cwd.'../node_business/'.$name.'.php';
+                $node_file = FOLDER_ROOT.'/node_business/'.$name.'.php';
                 if (file_exists($node_file)) {
                     include $node_file;
                 } else {
