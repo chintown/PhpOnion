@@ -1,12 +1,12 @@
 <?
     // NEED path.php
     require('common/crypt.php');
-    require('config/pw.php');
+    require(FOLDER_ROOT.'config/pw.php');
 
     // TODO: use mysqli
     function dbq($sql, $return=false) {
         if ($return) return $sql;
-        $link = mysql_connect('',AUTH_USER,AUTH_PASS);
+        $link = mysql_connect(DB_HOST,AUTH_USER,AUTH_PASS);
         $response = db_check('mysql_connect', $link);
         if ($response !== DB_VALID) { return $response; }
 
@@ -187,11 +187,29 @@
             return DB_VALID;
         }
     }
+    /**
+     * compose SELECT statment
+     * @param string $tables <p>
+     * FROM $tables
+     * </p>
+     * @param string $cols <p>
+     * "SELECT $cols". check <code>cols()</code><br/>
+     *      null -> '*'
+     * @param string $conds <p>
+     * "WHERE $cols". check <code>conds()</code><br/>
+     *      null -> no 'WHERE'
+     * </p>
+     * @param boolean $return <p>
+     *      false, directly executed by <code>dbq</code>
+     *      true, just return string
+     * </p>
+     * @return object of 1. dbq 2. sql string
+     */
     function db_sel($tables, $cols, $conds, $return=false) {
         $qs = array();
-        $qs[] = "SELECT $cols";
+        $qs[] = ($cols === null) ? 'SELECT *' : "SELECT $cols";
         $qs[] = "FROM $tables";
-        $qs[] = "WHERE $conds";
+        $qs[] = ($conds === null) ? '' : "WHERE $conds";
         $qs = implode(' ', $qs);
         if (!$return) {
             return dbq($qs);
@@ -239,6 +257,11 @@
         } else {
             return $qs;
         }
+    }
+    function db_limit($offset=0, $count=10) {
+        $offset = intval($offset);
+        $count = intval($count);
+        return " LIMIT $offset, $count";
     }
     function from($table, $alias='') {
         $from = array("`$table`");
