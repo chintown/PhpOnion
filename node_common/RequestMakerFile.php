@@ -26,18 +26,20 @@ class RequestMakerFile extends BaseNode {
     public function execute($req, $res) {
 
         $file_info = array();
-        if (!empty($_FILES) && isset($_FILES[$this->expected_field_name])) {
-            $file_info = $_FILES[$this->expected_field_name];
-            $ext = strtolower(end(explode(".", $file_info["name"])));
-            $file_info['_extension'] = $ext;
-            $file_info['_upload_msg'] = $this->UPLOAD_ERR[$file_info["error"]];
-            if ($file_info['_upload_msg'] === 'UPLOAD_ERR_OK') {
-                $file_info['_image_type'] = get_image_type_name($file_info['tmp_name']);
+        if (!empty($_FILES)) {
+            if (isset($_FILES[$this->expected_field_name])) {
+                $file_info = $_FILES[$this->expected_field_name];
+                $ext = strtolower(end(explode(".", $file_info["name"])));
+                $file_info['_extension'] = $ext;
+                $file_info['_upload_msg'] = $this->UPLOAD_ERR[$file_info["error"]];
+                if ($file_info['_upload_msg'] === 'UPLOAD_ERR_OK') {
+                    $file_info['_image_type'] = get_image_type_name($file_info['tmp_name']);
+                }
+            } else {
+                $res->addLog(array(
+                    'msg_file_upload'=> 'you need to use valid field name.'
+                ));
             }
-        } else if (empty($_FILES[$this->expected_field_name])) {
-            $res->addLog(array(
-                'msg_file_upload'=> 'you need to use valid field name.'
-            ));
         }
 
         $req->setFile($file_info);
