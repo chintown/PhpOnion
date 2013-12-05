@@ -4,6 +4,20 @@
     require(FOLDER_ROOT.'config/pw.php');
 
     // TODO: use mysqli
+    /**
+     * execute given sql statement with error handling
+     * @param string $sql <p>
+     *      SQL statement
+     * </p>
+     * @param boolean $return <p>
+     *      whether execute the statement,
+     *      OR, just return the string for dry run
+     * </p>
+     * @return mixed <p>
+     *      db result, for SELECT statement<br/>
+     *      DB_ERROR or DB_VALID, for NON-SELECT statement
+     * </p>
+     */
     function dbq($sql, $return=false) {
         if ($return) return $sql;
         $link = mysql_connect(DB_HOST,AUTH_USER,AUTH_PASS);
@@ -169,6 +183,21 @@
 
         return DB_VALID;
     }
+
+    /**
+     * based on the given boolean result value,
+     * do proper error handling on it.
+     * @param string $what <p>
+     *      description of current checking action
+     * </p>
+     * @param boolean $ok <p>
+     *      the known result of checking action
+     * </p>
+     * @param object $dblink <p>
+     *      mysql link object for getting mysql error message
+     * </p>
+     * @return int DB_ERROR or DB_VALID
+     */
     function db_check($what, $ok, $dblink=null) {
         if (!$ok) {
             if (DEV_MODE) {
@@ -188,9 +217,9 @@
         }
     }
     /**
-     * compose SELECT statment
+     * compose (and execute) SELECT statment
      * @param string $tables <p>
-     * FROM $tables
+     * "FROM $tables". check <code>froms()</code><br/>
      * </p>
      * @param string $cols <p>
      * "SELECT $cols". check <code>cols()</code><br/>
@@ -203,7 +232,7 @@
      *      false, directly executed by <code>dbq</code>
      *      true, just return string
      * </p>
-     * @return object of 1. dbq 2. sql string
+     * @return mixed of 1. DB_VALID or DB_ERROR 2. sql string
      */
     function db_sel($tables, $cols, $conds, $return=false) {
         $qs = array();
@@ -217,6 +246,21 @@
             return $qs;
         }
     }
+
+    /**
+     * compose (and execute) SELECT statement
+     * @param $table
+     * @param array $pairs <p>
+     *      field name => value
+     * @param boolean $return <p>
+     *      false, directly executed by <code>dbq</code>
+     *      true, just return string
+     * </p>
+     * @internal param string $tables <p>
+     *      "FROM $tables". check <code>froms()</code><br/>
+     * </p>
+     * @return mixed of 1. db resource | false 2. sql string
+     */
     function db_ins($table, $pairs, $return=false) {
         $qs = array();
         $qs[] = "INSERT INTO `$table`";
