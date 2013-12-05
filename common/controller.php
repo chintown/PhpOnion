@@ -27,6 +27,8 @@
     define('SUB_CHAIN', $parts[0]);
     if (SUB_CHAIN === '') {
         return;
+    } else if (!isset($conf[SUB_CHAIN])) {
+        die("Error invalid route: ".SUB_CHAIN);
     }
 
     // extract sub config
