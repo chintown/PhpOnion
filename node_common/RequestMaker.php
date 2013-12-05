@@ -45,22 +45,14 @@ class RequestMaker extends BaseNode {
         // 2. $_GET
         // array(1) {
         //     ["target"]=>
-        //     string(33) "meta/{"comment":{"$ne":"kokoko"}}"
-        // }
-        // or
-        // array(1) {
-        //     ["target"]=>
-        //     string(33) "meta/be7898b5a0609b16"
+        //     string(33) "meta/key1=a&key2=b"
         // }
         $params = array();
         $parts = explode('/', $_GET['target'], 2);
         if (count($parts) == 2) {
             $param_str = $parts[1];
-            if (substr($param_str, 0, 1) === '{') {
-                $params = json_decode($param_str, true);
-            } else {
-                $params['_id'] = (string) $param_str;
-            }
+            $param_str = trim($param_str, '?');
+            parse_str($param_str, $params);
         }
         return $params;
     }
