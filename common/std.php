@@ -3,9 +3,18 @@
     function is_assoc($arr) {
         return array_keys($arr) !== range(0, count($arr) - 1);
     }
+    /**
+     * get key-value pairs of given keys from the associated array
+     * and set empty string value if key does not exist
+     * @param array $stack <p>
+     * The raw array.
+     * </p>
+     * @param string $key1, $key2, ... <p>
+     * a list of expected keys
+     * </p>
+     * @return array filtered array.
+     */
     function pickup() {
-        // get key-value pairs of given keys from the associated array
-        // and set empty string value if key does not exist
         $picked = array();
         $arg_list = func_get_args();
         $actuals = array_shift($arg_list);
