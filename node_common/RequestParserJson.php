@@ -20,7 +20,7 @@ class RequestParserJson extends BaseNode {
         $req->setParams($params);
 
         $payload = $req->getPayload();
-        $payload = $this->modelPayload($payload);
+        $payload = $this->modelPayload($payload, $res);
         $req->setPayload($payload);
 
         $this->next($req, $res);
@@ -29,8 +29,11 @@ class RequestParserJson extends BaseNode {
     private function modelParams($params) {
         return $params;
     }
-    private function modelPayload($payload) {
+    private function modelPayload($payload, &$res) {
         $json = json_decode($payload);
+        if (!empty($payload) && $json == null) {
+            $res->addLog(array('invalid json payload', $payload));
+        }
         return $json;
     }
 }
