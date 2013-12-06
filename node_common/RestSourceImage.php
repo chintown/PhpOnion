@@ -106,11 +106,16 @@ class RestSourceImage extends BaseNode {
                 break;
         }
     }
+
+    protected function get_destination_file_name($raw) {
+        return normalize_filename($raw);
+    }
+
     private function saveFile($file_info) {
         $return = array('success'=> true, 'msg'=> '', 'path'=> '');
 
         $path_repo = $this->get_repo_path();
-        $fn_upload = normalize_filename($file_info['name']);
+        $fn_upload = $this->get_destination_file_name($file_info['name']);
         $path_upload = $path_repo . '/' . $fn_upload;
         if (!@move_uploaded_file($file_info['tmp_name'], $path_upload)) {
             $return['success'] = false;
