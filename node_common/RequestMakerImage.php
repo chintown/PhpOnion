@@ -1,9 +1,7 @@
 <?php
 
-$cwd = dirname(__FILE__).'/';
-require $cwd . '../node_common/RequestMaker.php';
 
-class RequestMakerImage extends RequestMaker {
+class RequestMakerImage extends BaseNode {
     function __construct() {
     }
     protected function parseParamsBy($verb) {
