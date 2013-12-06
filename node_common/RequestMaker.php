@@ -51,7 +51,6 @@ class RequestMaker extends BaseNode {
         $parts = explode('/', $_GET['target'], 2);
         if (count($parts) == 2) {
             $param_str = $parts[1];
-            $param_str = trim($param_str, '?');
             parse_str($param_str, $params);
         }
         return $params;
