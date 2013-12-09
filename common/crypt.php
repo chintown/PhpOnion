@@ -83,3 +83,10 @@
             mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
         );
     }
+
+    function is_valid_v4_uuid($raw) {
+        $matches = array();
+        preg_match("/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i",
+                    $raw, $matches);
+        return !empty($matches);
+    }
