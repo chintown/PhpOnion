@@ -1,6 +1,6 @@
 <?php
 
-class DecoratorNoRestDeleteGet extends BaseNode {
+class DecoratorNoRestGet extends BaseNode {
     public function execute($req, $res) {
         $verb = $req->getVerb();
 
