@@ -1,7 +1,8 @@
 <?php
 
+require_once 'RequestMaker.php';
 
-class RequestMakerImage extends BaseNode {
+class RequestMakerImage extends RequestMaker {
     function __construct() {
     }
     protected function parseParamsBy($verb) {
