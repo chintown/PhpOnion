@@ -225,7 +225,7 @@
      * "SELECT $cols". check <code>cols()</code><br/>
      *      null -> '*'
      * @param string $conds <p>
-     * "WHERE $cols". check <code>conds()</code><br/>
+     * "WHERE $cols". check <code>cond()</code><br/>
      *      null -> no 'WHERE'
      * </p>
      * @param boolean $return <p>
@@ -307,12 +307,12 @@
         $count = intval($count);
         return " LIMIT $offset, $count";
     }
-    function from($table, $alias='') {
+    function table($table, $alias='') {
         $from = array("`$table`");
         $from[] = (!empty($alias)) ? "AS $alias" : '';
         return implode(' ', $from);
     }
-    function froms() {
+    function tables() {
         $args = func_get_args();
         $args = (count($args) === 1 && is_array($args[0])) ? $args[0] : $args;
         return implode(', ', $args);
@@ -336,7 +336,7 @@
         return implode(', ', $args);
     }
     function cond($key, $val, $op='=') {
-        return "$key $op ".db_val($val);
+        return "$key $op $val";
     }
     function conds() {
         $args = func_get_args();
