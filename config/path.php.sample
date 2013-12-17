@@ -15,6 +15,4 @@
     define('STATIC_ROOT', 'http://'.WEB_HOST.WEB_PATH);
     define('FOLDER_ROOT', '.....'); // source
     define('IMG_REPO_ROOT', '.....'); // sub: raw/thumb
-
-    ini_set('include_path', ini_get('include_path') . ':' . FOLDER_ROOT); // for require/include
 ?>
