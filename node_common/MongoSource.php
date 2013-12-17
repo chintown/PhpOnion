@@ -40,7 +40,7 @@ class MongoSource extends BaseNode {
 
     protected function insert($what) {
         $cursor = $this->model->insert($what, array("w" => 1));
-        return isset($what['_id']) ? strval($what['_id']) : $what['_id'];
+        return serialize_mongo_id_from_if_needed($what);
     }
 
     protected function composeIdQuery($raw) {
