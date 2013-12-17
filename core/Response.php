@@ -124,6 +124,7 @@ class Response {
         }
     }
     public function dumpRequest() {
+        $this->request->http_accept = '...purged...';
         return var_export($this->request, true);
     }
     public function dumpResponse() {
