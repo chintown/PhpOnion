@@ -142,7 +142,7 @@ class Response {
 HINT;
 
         } else {
-            var_export($this->logs, true);
+            return var_export($this->logs, true);
         }
     }
     public function dumpChainLogs() {
