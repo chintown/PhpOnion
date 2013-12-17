@@ -70,7 +70,5 @@ class MongoSource extends BaseNode {
     }
     protected  function delete($which) {
         return $this->model->remove($which);
-
-        // $r = $this->mongo->econt->meta->remove(array('author'=> 'yyy'));
     }
 }
