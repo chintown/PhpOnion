@@ -16,17 +16,17 @@ class BaseNode {
         // do something
     }
     public function next(&$req, &$res) {
-        $this->set_trace(get_class($this));
+        $this->addChainLog(get_class($this));
         if (!isset($this->nextNode)) {
-            $this->set_trace("chain ends at ".get_class($this));
+            $this->addChainLog("chain ends at ".get_class($this));
             return;
         }
-        $this->set_trace("beginning of ".get_class($this->nextNode));
+        $this->addChainLog("beginning of ".get_class($this->nextNode));
         $this->nextNode->execute($req, $res);
-        $this->set_trace("end of ".get_class($this->nextNode));
+        $this->addChainLog("end of ".get_class($this->nextNode));
     }
 
-    private function set_trace($msg) {
+    private function addChainLog($msg) {
         if (!TRACE_NODE) {
             return;
         }
