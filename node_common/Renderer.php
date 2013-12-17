@@ -9,22 +9,15 @@ class Renderer extends BaseNode {
         $debug = DEV_MODE && $req->getDebug();
 
         if ($debug) {
-            echo "<code>";
-            echo "\n[OUTPUT]\n";
-            echo "</code>";
-        }
-        $format = $res->getFormat();
-        $format = ($debug) ? 'debug' : $format;
-        $res->render($format);
-
-        if ($debug) {
-            echo "<code>";
-            echo "\n[REQUEST]\n";
-            echo $res->dumpRequest();
-
-            echo "\n[LOGS]\n";
-            echo $res->dumpLogs();
-            echo "</code>";
+            header("Content-Type: text/html; charset=UTF-8");
+            $r_request = $res->dumpRequest();
+            $r_log = $res->dumpLogs();
+            $r_response = var_export($res->getResult(), true);
+            require 'core/debug.php';
+        } else {
+            $format = $res->getFormat();
+            $format = ($debug) ? 'debug' : $format;
+            $res->render($format);
         }
     }
 }

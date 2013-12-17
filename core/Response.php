@@ -116,7 +116,7 @@ class Response {
         }
     }
     public function dumpRequest() {
-        return var_export($this->request);
+        return var_export($this->request, true);
     }
     public function dumpLogs() {
         return var_export($this->logs, true);
