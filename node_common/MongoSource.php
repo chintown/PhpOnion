@@ -43,10 +43,10 @@ class MongoSource extends BaseNode {
         return isset($what['_id']) ? strval($what['_id']) : $what['_id'];
     }
 
-    protected function composeIdSelector($raw) {
+    protected function composeIdQuery($raw) {
         return array('_id'=> get_mongo_id($raw));
     }
-    protected function composePagingSelector($offset, $num) {
+    protected function composePagingQuery($offset, $num) {
         $offset = ($offset !== 0 && empty($offset)) ? 0 : $offset;
         $num = ($num !== 0 && empty($num)) ? 10 : $num;
         return array(
@@ -54,7 +54,7 @@ class MongoSource extends BaseNode {
             '$limit'=> intval($num)
         );
     }
-    protected function composeFieldsSelector($raw) {
+    protected function composeFieldsQuery($raw) {
         $result = array();
         foreach($raw as $field) {
             $result[$field] = true;
