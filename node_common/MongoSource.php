@@ -61,4 +61,16 @@ class MongoSource extends BaseNode {
         }
         return $result;
     }
+    protected  function update($which, $what, $option) {
+        if (empty($option)) {
+            return $this->model->update($which, $what);
+        } else {
+            return $this->model->update($which, $what, $option);
+        }
+    }
+    protected  function delete($which) {
+        return $this->model->remove($which);
+
+        // $r = $this->mongo->econt->meta->remove(array('author'=> 'yyy'));
+    }
 }
