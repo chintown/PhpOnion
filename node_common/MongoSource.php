@@ -17,6 +17,7 @@ class MongoSource extends BaseNode {
         } else {
             $r = $this->model->findOne($which);
         }
+        $r = serialize_mongo_id_from($r);
         return $r;
     }
     protected function select($which, $fields, $options=array()) {
@@ -35,6 +36,7 @@ class MongoSource extends BaseNode {
         if (array_key_exists('$count', $options)) {
             $r['count'] = $side_val;
         }
+        $r = map($r, 'serialize_mongo_id_from_if_needed', false);
         return $r;
     }
 
