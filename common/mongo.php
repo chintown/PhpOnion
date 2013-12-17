@@ -7,3 +7,7 @@ function is_valid_mongo_id($raw) {
 function get_mongo_id($raw) {
     return new MongoId((string) $raw);
 }
+
+function serialize_mongo_id($raw) {
+    return strval($raw);
+}
