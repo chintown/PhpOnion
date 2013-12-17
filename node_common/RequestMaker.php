@@ -22,6 +22,7 @@ class RequestMaker extends BaseNode {
         $debug_info = $this->parseDebug();
 
         $res->addChainLog(array("target_parts"=> explode('/', $_GET['target'], 2)));
+        $res->addChainLog(array("get params"=> $_GET));
 
         $req = new Request();
         $req->setVerb($verb);
@@ -48,11 +49,10 @@ class RequestMaker extends BaseNode {
         //     ["target"]=>
         //     string(33) "meta/key1=a&key2=b"
         // }
-        $params = array();
-        $parts = explode('/', $_GET['target'], 2);
-        if (count($parts) == 2) {
-            $param_str = $parts[1];
-            parse_str($param_str, $params);
+        $params = array_merge(array(), $_GET);
+        unset($params['target']);
+        if (isset($params['debug'])) {
+            unset($params['debug']);
         }
         return $params;
     }
