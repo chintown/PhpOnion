@@ -56,9 +56,18 @@ class MongoSource extends BaseNode {
             '$limit'=> intval($num)
         );
     }
-    protected function composeFieldsQuery($raw) {
+    protected function composeFieldsQuery() {
         $result = array();
-        foreach($raw as $field) {
+        $arg_list = func_get_args();
+        foreach($arg_list as $field) {
+            $result[$field] = true;
+        }
+        return $result;
+    }
+    protected function composeTurnOnQuery() {
+        $result = array();
+        $arg_list = func_get_args();
+        foreach($arg_list as $field) {
             $result[$field] = true;
         }
         return $result;
