@@ -130,7 +130,19 @@ class Response {
         return var_export($this->result, true);
     }
     public function dumpLogs() {
-        return var_export($this->logs, true);
+        if (empty($this->logs)) {
+            return <<<HINT
+   ____  _  __
+  / __ \| |/ /
+ | |  | | ' /
+ | |  | |  <
+ | |__| | . \
+  \____/|_|\_\
+HINT;
+
+        } else {
+            var_export($this->logs, true);
+        }
     }
     public function dumpChainLogs() {
         return var_export($this->chain_logs, true);
