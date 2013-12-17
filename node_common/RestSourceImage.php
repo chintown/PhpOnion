@@ -38,7 +38,7 @@ class RestSourceImage extends BaseNode {
                     } else if  ($h === 0) {
                         $h = $w;
                     }
-                    $path_out = $this->get_thumb_filename(IMG_REPO_ROOT . '/thumb/' . $params['filename'], "${w}x${h}");
+                    $path_out = $this->getThumbFilename(IMG_REPO_ROOT . '/thumb/' . $params['filename'], "${w}x${h}");
                     $process_info = gen_thumbnail($path_in, $path_out, $w, $h, 'GD');
                     $res->addLog($process_info);
                     if (!$process_info['success']) {
@@ -107,14 +107,14 @@ class RestSourceImage extends BaseNode {
         }
     }
 
-    protected function get_destination_file_name($raw) {
+    protected function getDestinationFileName($raw) {
         return normalize_filename($raw);
     }
 
     private function saveFile($file_info) {
         $return = array('success'=> true, 'msg'=> '', 'path'=> '');
 
-        $path_repo = $this->get_repo_path();
+        $path_repo = $this->getRepoPath();
         $fn_upload = $this->get_destination_file_name($file_info['name']);
         $path_upload = $path_repo . '/' . $fn_upload;
         if (!@move_uploaded_file($file_info['tmp_name'], $path_upload)) {
@@ -125,14 +125,14 @@ class RestSourceImage extends BaseNode {
         }
         return $return;
     }
-    private function get_repo_path() {
+    private function getRepoPath() {
         $path_repo = IMG_REPO_ROOT . '/raw';
         if (!file_exists($path_repo)) {
             mkdir($path_repo, 0777, true);
         }
         return $path_repo;
     }
-    private function get_thumb_filename($filename, $size) {
+    private function getThumbFilename($filename, $size) {
         $parts = explode('.', $filename);
         $ext = array_pop($parts);
         $pre = implode('.', $parts);
