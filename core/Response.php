@@ -16,6 +16,7 @@ class Response {
         $this->format       = 'json'; // output format
         $this->request;
         $this->logs         = array();
+        $this->chain_logs   = array();
         $this->blockExternal= true;
     }
     public function setContentType($type) {
@@ -45,6 +46,13 @@ class Response {
             $this->logs = array_merge($this->logs, $msg);
         } else {
             $this->logs[] = $msg;
+        }
+    }
+    public function addChainLog($msg) {
+        if (is_array($msg)) {
+            $this->chain_logs = array_merge($this->chain_logs, $msg);
+        } else {
+            $this->chain_logs[] = $msg;
         }
     }
     public function setBlockExternal($block) {
@@ -118,7 +126,13 @@ class Response {
     public function dumpRequest() {
         return var_export($this->request, true);
     }
+    public function dumpResponse() {
+        return var_export($this->result, true);
+    }
     public function dumpLogs() {
         return var_export($this->logs, true);
+    }
+    public function dumpChainLogs() {
+        return var_export($this->chain_logs, true);
     }
 }

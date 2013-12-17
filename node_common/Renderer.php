@@ -11,8 +11,9 @@ class Renderer extends BaseNode {
         if ($debug) {
             header("Content-Type: text/html; charset=UTF-8");
             $r_request = $res->dumpRequest();
+            $r_response = $res->dumpResponse();
             $r_log = $res->dumpLogs();
-            $r_response = var_export($res->getResult(), true);
+            $r_chain = $res->dumpChainLogs();
             require 'core/debug.php';
         } else {
             $format = $res->getFormat();

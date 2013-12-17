@@ -24,6 +24,10 @@ require $cwd . '../common/RestUtil.php';
 define('BASE_NODE_REPO', $cwd.'../node_common/');
 define('BUSINESS_NODE_REPO', FOLDER_ROOT.'/node_business/');
 
+// prepare req/res and invoke chain
+$req = null;
+$res = new Response();
+
 $services = load_services_manifest($cwd);
 $entry = parse_target_entry_name($_GET['target'], $services)
                 or die("Error: invalid routing entry: [".$_GET['target']."]");
@@ -32,11 +36,8 @@ $chain_nodes = array_merge($main_chain_nodes, $sub_chain_nodes);
 $node_paths = find_node_paths($chain_nodes, $error) or die($error);
 $node_instance = init_node_instances($node_paths, $error) or die($error);
 
-// prepare req/res and invoke chain
-$req = null;
-$res = new Response();
+$res->addChainLog($chain_nodes);
 $node_instance[0]->execute($req, $res);
-
 // -----------------------------------------------------------------------------
 
 function load_services_manifest($cwd) {
