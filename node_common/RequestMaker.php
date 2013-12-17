@@ -21,6 +21,8 @@ class RequestMaker extends BaseNode {
         $payload = $this->parsePayload();
         $debug_info = $this->parseDebug();
 
+        $res->addChainLog(array("target_parts"=> explode('/', $_GET['target'], 2)));
+
         $req = new Request();
         $req->setVerb($verb);
         $req->setTarget($target);

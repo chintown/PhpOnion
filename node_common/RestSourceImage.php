@@ -1,5 +1,6 @@
 <?php
 
+require_once 'common/process.php';
 require_once 'common/util.php';
 
 /**
