@@ -1,8 +1,5 @@
 <?php
 
-/*
- *
- */
 class ResponseMaker extends BaseNode {
     function __construct() {
     }

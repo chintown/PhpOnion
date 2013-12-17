@@ -1,11 +1,9 @@
 <?php
 class RestUtils {
     public static function processRequest() {
-
     }
 
     public static function sendResponse($status = 200, $body = '', $content_type = 'text/html') {
-
     }
 
     public static function getStatusCodeMessage($status) {

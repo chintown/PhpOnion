@@ -1,12 +1,11 @@
 <?php
-$cwd = dirname(__FILE__).'/';
-require $cwd.'../common/Request.php';
+
+require_once 'core/Request.php';
 
 /*
  * parse from php system var to Request object with
  * verb, target, params and payload
  */
-//
 class RequestMaker extends BaseNode {
     var $res;
     function __construct() {

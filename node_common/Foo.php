@@ -1,4 +1,5 @@
 <?php
+
 class Foo extends BaseNode {
     function __construct() {
     }

@@ -1,7 +1,6 @@
 <?php
 
-$cwd = dirname(__FILE__).'/';
-require_once $cwd.'../common/image.php';
+require_once 'common/image.php';
 
 /*
  * parse information of uploaded file
@@ -44,10 +43,6 @@ class RequestMakerFile extends BaseNode {
 
         $req->setFile($file_info);
         $this->next($req, $res);
-    }
-
-    private function parseVerb() {
-        return strtoupper($_SERVER['REQUEST_METHOD']);
     }
 
     // deprecated. use image.php

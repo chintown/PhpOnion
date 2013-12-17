@@ -1,7 +1,6 @@
 <?php
 
-$cwd = dirname(__FILE__).'/';
-require $cwd.'../common/util.php';
+require_once 'common/util.php';
 
 class TestNode extends BaseNode {
     function __construct() {

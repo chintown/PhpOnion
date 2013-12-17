@@ -13,12 +13,12 @@
     6. output response
 
     - checking hooks on nodes
-    - erro handling
+    - error handling
     */
 
     // load service configuration
     $cwd = dirname(__FILE__).'/';
-    require $cwd.'../lib/spyc.php';
+    require $cwd . '../lib/spyc/spyc.php';
     $conf = spyc_load_file(FOLDER_ROOT.'config/services.yaml');
 
     // load base class
@@ -54,8 +54,8 @@
     $default_tail->setNext($sub_chain_head);
 
     // prepare req/res
-    require $cwd."../common/RestUtil.php";
-    require $cwd."../common/Response.php";
+    require $cwd . "../common/RestUtil.php";
+    require $cwd . "../common/Response.php";
 
     $req = null;
     $res = new Response();

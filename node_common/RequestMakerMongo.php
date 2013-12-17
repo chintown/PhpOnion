@@ -1,6 +1,6 @@
 <?php
-$cwd = dirname(__FILE__).'/';
-require $cwd.'../common/MongoRequest.php';
+
+require_once 'core/MongoRequest.php';
 
 /*
  * parse from mongo-specific syntax

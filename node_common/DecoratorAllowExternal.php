@@ -1,4 +1,5 @@
 <?php
+
 class DecoratorAllowExternal extends BaseNode {
     function __construct() {
     }

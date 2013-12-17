@@ -1,5 +1,6 @@
 <?php
-  class Renderer extends BaseNode {
+
+class Renderer extends BaseNode {
     function __construct() {
     }
     public function execute($req, $res) {
@@ -26,4 +27,4 @@
             echo "</code>";
         }
     }
-  }
+}

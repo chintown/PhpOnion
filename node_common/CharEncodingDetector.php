@@ -1,4 +1,5 @@
 <?php
+
 class CharEncodingDetector extends BaseNode {
     function __construct() {
     }

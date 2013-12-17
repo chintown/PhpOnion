@@ -1,4 +1,5 @@
 <?php
+
 class Response {
     private $content_type;
     private $status;
