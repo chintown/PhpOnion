@@ -47,9 +47,19 @@ class RequestMaker extends BaseNode {
         // 2. $_GET
         // array(1) {
         //     ["target"]=>
-        //     string(33) "meta/key1=a&key2=b"
+        //     string(33) "meta/key1=a"
+        //      ["key2"]=>
+        //     string(1) "b"
         // }
-        $params = array_merge(array(), $_GET);
+
+        $params = array();
+        $parts = explode('/', $_GET['target'], 2);
+        if (count($parts) == 2) {
+            $param_str = $parts[1];
+            parse_str($param_str, $params);
+        }
+
+        $params = array_merge($params, $_GET);
         unset($params['target']);
         if (isset($params['debug'])) {
             unset($params['debug']);
