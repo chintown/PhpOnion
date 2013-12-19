@@ -115,7 +115,7 @@ class RestSourceImage extends BaseNode {
         $return = array('success'=> true, 'msg'=> '', 'path'=> '');
 
         $path_repo = $this->getRepoPath();
-        $fn_upload = $this->get_destination_file_name($file_info['name']);
+        $fn_upload = $this->getDestinationFileName($file_info['name']);
         $path_upload = $path_repo . '/' . $fn_upload;
         if (!@move_uploaded_file($file_info['tmp_name'], $path_upload)) {
             $return['success'] = false;
