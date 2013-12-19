@@ -29,7 +29,7 @@ class RequestMaker extends BaseNode {
         $req->setTarget($target);
         $req->setParams($params);
         $req->setPayload($payload);
-        $req->setHttpAccept($_SERVER['HTTP_ACCEPT']);
+        $req->setHttpAccept(isset($_SERVER['HTTP_ACCEPT']) ? $_SERVER['HTTP_ACCEPT'] : null);
         $req->setDebug($debug_info);
 
         $this->next($req, $res);

@@ -31,7 +31,9 @@ class Request {
         $this->payload = $payload;
     }
     public function setHttpAccept($accept) {
-        $this->http_accept = $accept;
+        if ($accept !== null) {
+            $this->http_accept = $accept;
+        }
     }
     public function setFile($file) {
         $this->file = $file;
