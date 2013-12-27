@@ -97,7 +97,10 @@ class RestSourceImage extends BaseNode {
                     $result['path'] = $valid_info['path'];
                 }
 
-                $res->setResult(array('path'=> $result['path']));
+                $res->setResult(array(
+                    'success'=> true,
+                    'path'=> $result['path']
+                ));
                 $res->addLog($result);
                 break;
             case 'PUT':
