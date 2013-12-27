@@ -31,7 +31,9 @@ class MongoSource extends BaseNode {
             $key = substr($key, 1);
             $side_val = $cursor->$key($value);
         }
-        $r = iterator_to_array($cursor, true);
+        $use_sequencial_array = array_key_exists('$sort', $options);
+        $output_with_id_key = !$use_sequencial_array;
+        $r = iterator_to_array($cursor, $output_with_id_key); // do not use id key
         // TODO revamp the output structure
         if (array_key_exists('$count', $options)) {
             $r['count'] = $side_val;
@@ -47,6 +49,9 @@ class MongoSource extends BaseNode {
 
     protected function composeIdQuery($raw) {
         return array('_id'=> get_mongo_id($raw));
+    }
+    protected function composeSortingQuery($criteria) {
+        return array('$sort'=> $criteria);
     }
     protected function composePagingQuery($offset, $num) {
         $offset = ($offset !== 0 && empty($offset)) ? 0 : $offset;
