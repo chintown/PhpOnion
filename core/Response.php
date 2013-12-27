@@ -35,6 +35,9 @@ class Response {
     public function setResult($result) {
         $this->result = $result;
     }
+    public function updateResult($update) {
+        $this->result = array_merge($this->result, $update);
+    }
     public function setFormat($format) {
         $this->format = $format;
     }
@@ -61,6 +64,9 @@ class Response {
 
     public function getResult() {
         return $this->result;
+    }
+    public function getResultField($key) {
+        return isset($this->result[$key]) ? $this->result[$key] : null;
     }
     public function getFormat() {
         return $this->format;
