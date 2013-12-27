@@ -82,4 +82,13 @@ class MongoSource extends BaseNode {
     protected  function delete($which) {
         return $this->model->remove($which);
     }
+
+    protected function logMongoError($res) {
+        $last_err = $this->db->lastError();
+        if ($last_err['err'] !== null) {
+            $res->addLog(array(
+                'mongo'=> var_export($last_err, true)
+            ));
+        }
+    }
 }
