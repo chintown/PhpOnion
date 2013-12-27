@@ -77,7 +77,7 @@ class MongoSource extends BaseNode {
         }
         return $result;
     }
-    protected  function update($which, $what, $option) {
+    protected  function update($which, $what, $option=null) {
         if (empty($option)) {
             return $this->model->update($which, $what);
         } else {
