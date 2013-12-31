@@ -239,9 +239,9 @@ function is_utf8($str){
     return 1;
 }
 function str_to_Hex($string) {
-        $hex = array();
-        for ($i=0; $i < strlen($string); $i++) {
-            $hex[] .= $string[$i].'='.dechex(ord($string[$i]));
-        }
-        return join(' ', $hex);
+    $hex = array();
+    for ($i=0; $i < strlen($string); $i++) {
+        $hex[] .= $string[$i].'='.dechex(ord($string[$i]));
     }
+    return join(' ', $hex);
+}
