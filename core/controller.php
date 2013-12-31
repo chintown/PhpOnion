@@ -18,6 +18,8 @@
 */
 
 $cwd = dirname(__FILE__).'/';
+require $cwd . '../lib/spyc/spyc.php';
+require $cwd . 'Router.php';
 require $cwd . 'BaseNode.php';
 require $cwd . 'Response.php';
 require $cwd . '../common/RestUtil.php';
@@ -28,9 +30,12 @@ define('BUSINESS_NODE_REPO', FOLDER_ROOT.'/node_business/');
 $req = null;
 $res = new Response();
 
-$services = load_services_manifest($cwd);
-$entry = parse_target_entry_name($_GET['target'], $services)
-                or die("Error: invalid routing entry: [".$_GET['target']."]");
+$services = load_services_manifest();
+$router = new Router(load_routing_manifest());
+$entry = $router->parse($_GET['target'], $rest_path_params)
+            or die("Error: invalid routing entry: [".$_GET['target']."]");
+validate_target_entry($entry, $services)
+            or die("Error: invalid service entry: [".$_GET['target']."]");
 list($main_chain_nodes, $sub_chain_nodes) = load_services_nodes($services, $entry);
 $chain_nodes = array_merge($main_chain_nodes, $sub_chain_nodes);
 $node_paths = find_node_paths($chain_nodes, $error) or die($error);
@@ -40,16 +45,16 @@ $res->addChainLog($chain_nodes);
 $node_instance[0]->execute($req, $res);
 // -----------------------------------------------------------------------------
 
-function load_services_manifest($cwd) {
-    require $cwd . '../lib/spyc/spyc.php';
-    $conf = spyc_load_file(FOLDER_ROOT . 'config/services.yaml');
-    return $conf;
+function load_routing_manifest() {
+    return spyc_load_file(FOLDER_ROOT . 'config/routes.yaml');
 }
 
-function parse_target_entry_name($route_path, $services) {
-    $parts = explode('/', $route_path); // check .htaccess
-    $entry = $parts[0];
-    if ($entry === '') {
+function load_services_manifest() {
+    return spyc_load_file(FOLDER_ROOT . 'config/services.yaml');
+}
+
+function validate_target_entry($entry, $services) {
+    if (empty($entry)) {
         return false;
     } else if (!isset($services[$entry])) {
         return false;
