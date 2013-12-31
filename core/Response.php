@@ -1,7 +1,7 @@
 <?php
 
 class Response {
-    private $content_type;
+    private $contentType;
     private $status;
     private $result;
     private $request;
@@ -9,18 +9,18 @@ class Response {
     private $blockExternal;
 
     public function __construct() {
-        $this->content_type = 'application/json';
+        $this->contentType = 'application/json';
         $this->status       = 200;
         $this->headers      = array();
         $this->result       = array();
         $this->format       = 'json'; // output format
         $this->request;
         $this->logs         = array();
-        $this->chain_logs   = array();
+        $this->chainLogs   = array();
         $this->blockExternal= true;
     }
     public function setContentType($type) {
-        $this->content_type = $type;
+        $this->contentType = $type;
     }
     public function setStatus($status) {
         $this->status = $status;
@@ -53,9 +53,9 @@ class Response {
     }
     public function addChainLog($msg) {
         if (is_array($msg)) {
-            $this->chain_logs = array_merge($this->chain_logs, $msg);
+            $this->chainLogs = array_merge($this->chainLogs, $msg);
         } else {
-            $this->chain_logs[] = $msg;
+            $this->chainLogs[] = $msg;
         }
     }
     public function setBlockExternal($block) {
@@ -110,7 +110,7 @@ class Response {
             header("Content-Type: application/json; charset=UTF-8");
             echo json_encode($this->result);
         } else if ($format === 'image') {
-            header("Content-Type: ".$this->content_type);
+            header("Content-Type: ".$this->contentType);
             $result = $this->result;
             if ($result['path'] !== null) {
                 echo file_get_contents($result['path']);
@@ -152,6 +152,6 @@ HINT;
         }
     }
     public function dumpChainLogs() {
-        return var_export($this->chain_logs, true);
+        return var_export($this->chainLogs, true);
     }
 }
