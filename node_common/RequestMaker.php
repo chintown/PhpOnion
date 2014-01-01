@@ -24,10 +24,15 @@ class RequestMaker extends BaseNode {
         $res->addChainLog(array("target_parts"=> explode('/', $_GET['target'], 2)));
         $res->addChainLog(array("get params"=> $_GET));
 
-        $req = new Request();
+        if (!isset($req)) {
+            $req = new Request();
+            $req->setParams($params);
+        } else {
+            $req->updateParams($params);
+        }
         $req->setVerb($verb);
         $req->setTarget($target);
-        $req->setParams($params);
+
         $req->setPayload($payload);
         $req->setHttpAccept(isset($_SERVER['HTTP_ACCEPT']) ? $_SERVER['HTTP_ACCEPT'] : null);
         $req->setDebug($debug_info);

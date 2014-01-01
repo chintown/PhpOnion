@@ -27,6 +27,9 @@ class Request {
     public function setParams($params) {
         $this->params = $params;
     }
+    public function updateParams($params) {
+        $this->params = array_merge($this->params, $params);
+    }
     public function setPayload($payload) {
         $this->payload = $payload;
     }

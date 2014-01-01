@@ -20,6 +20,7 @@
 $cwd = dirname(__FILE__).'/';
 require $cwd . '../lib/spyc/spyc.php';
 require $cwd . 'Router.php';
+require $cwd . 'Request.php';
 require $cwd . 'BaseNode.php';
 require $cwd . 'Response.php';
 require $cwd . '../common/RestUtil.php';
@@ -27,7 +28,7 @@ define('BASE_NODE_REPO', $cwd.'../node_common/');
 define('BUSINESS_NODE_REPO', FOLDER_ROOT.'/node_business/');
 
 // prepare req/res and invoke chain
-$req = null;
+$req = new Request();
 $res = new Response();
 
 $services = load_services_manifest();
@@ -41,6 +42,7 @@ $chain_nodes = array_merge($main_chain_nodes, $sub_chain_nodes);
 $node_paths = find_node_paths($chain_nodes, $error) or die($error);
 $node_instance = init_node_instances($node_paths, $error) or die($error);
 
+$req->setParams($rest_path_params);
 $res->addChainLog($chain_nodes);
 $node_instance[0]->execute($req, $res);
 // -----------------------------------------------------------------------------
