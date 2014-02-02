@@ -20,6 +20,7 @@ class RequestMaker extends BaseNode {
         $params = $this->parseParamsBy($verb);
         $payload = $this->parsePayload();
         $debug_info = $this->parseDebug();
+        $xdebug_info = $this->parseXdebug();
 
         $res->addChainLog(array("target_parts"=> explode('/', $_GET['target'], 2)));
         $res->addChainLog(array("get params"=> $_GET));
@@ -36,6 +37,12 @@ class RequestMaker extends BaseNode {
         $req->setPayload($payload);
         $req->setHttpAccept(isset($_SERVER['HTTP_ACCEPT']) ? $_SERVER['HTTP_ACCEPT'] : null);
         $req->setDebug($debug_info);
+        $req->setXdebug($xdebug_info);
+
+        if (!$req->getXdebug()) {
+            ini_set('xdebug.default_enable', FALSE);
+            ini_set('html_errors', FALSE);
+        }
 
         $this->next($req, $res);
     }
@@ -76,6 +83,9 @@ class RequestMaker extends BaseNode {
     }
     private function parseDebug() {
         return isset($_GET['debug']);
+    }
+    private function parseXdebug() {
+        return ($_GET['debug'] === '2') ? false : true;
     }
 
     private function filterTarget($v) {

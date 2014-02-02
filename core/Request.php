@@ -44,7 +44,9 @@ class Request {
     public function setDebug($debug) {
         $this->debug = $debug;
     }
-
+    public function setXdebug($debug) {
+        $this->xdebug = $debug;
+    }
     public function getVerb() {
         return $this->verb;
     }
@@ -62,8 +64,11 @@ class Request {
     }
     public function getFile() {
         return $this->file;
-    }    public function getDebug() {
+    }
+    public function getDebug() {
         return $this->debug;
     }
-
+    public function getXdebug() {
+        return $this->xdebug;
+    }
 }
