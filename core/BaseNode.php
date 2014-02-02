@@ -35,4 +35,21 @@ class BaseNode {
         $end_tag = "\n";
         echo $start_tag.$msg.$end_tag;
     }
+
+    /**
+     * @param $dict data to be checked
+     * @param $rules [['target key', 'validator name in node class', 'template of error mag'], ...]
+     * @return array validation result: valid:boolean, msg:string
+     */
+    protected function validateDictionary($dict, $rules) {
+        $return = array('valid'=> true, 'msg'=> array());
+        foreach ($rules as $rule) {
+            list($key, $validatorName, $errTemplate) = $rule;
+            if (!call_user_func_array(array($this, $validatorName), array($dict, $key))) {
+                $return['valid'] = false;
+                $return['msg'][] = sprintf($errTemplate, $key);
+            }
+        }
+        return $return;
+    }
 }
