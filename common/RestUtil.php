@@ -88,7 +88,7 @@ class RestUtils {
         fclose($stdout);
         curl_close($handle);
         return array(
-            'code' => $code,
+            'httpcode' => $code,
             'response' => $response,
             'header' => $header
         );
