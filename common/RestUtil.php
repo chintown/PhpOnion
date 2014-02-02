@@ -56,4 +56,41 @@ class RestUtils {
 
         return (isset($codes[$status])) ? $codes[$status] : '';
     }
+
+    public static function requestByGet($url, $headers) {
+        $handle = curl_init();
+        return self::request($url, $headers, $handle);
+    }
+
+    public static function requestByPost($url, $headers, $data) {
+        $handle = curl_init();
+        curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
+        return self::request($url, $headers, $handle);
+    }
+
+    public static function request($url, $headers, $handle) {
+        if (!empty($headers)) {
+            curl_setopt($handle, CURLOPT_HTTPHEADER, $headers);
+        }
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($handle, CURLOPT_URL, $url);
+
+        $stdout = fopen('php://stdout', 'w');
+        curl_setopt($handle, CURLOPT_VERBOSE, true);
+        curl_setopt($handle, CURLOPT_STDERR, $stdout);
+
+        $response = curl_exec($handle);
+        $code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+        $header = curl_getinfo($handle, CURLINFO_HEADER_OUT);
+        fclose($stdout);
+        curl_close($handle);
+        return array(
+            'code' => $code,
+            'response' => $response,
+            'header' => $header
+        );
+    }
 }
