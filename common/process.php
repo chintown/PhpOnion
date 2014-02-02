@@ -1,10 +1,16 @@
 <?php
 
+require_once 'std.php';
+
 function execute_external($executable, $arguments, $extra='', $exports=array(), $working_dir='') {
     $exports = map($exports, function($k, $v) {return "$k=$v";});
     $exports = (empty($exports)) ? '' : "export " . join(';', $exports);
 
-    $arguments = map($arguments, function($v) {return '"'.$v.'"';}, $is_pair_para=false);
+    if (is_assoc($arguments)) {
+        $arguments = map($arguments, function($flag, $v) {return "$flag $v";}, $is_pair_para=true);
+    } else {
+        $arguments = map($arguments, function($v) {return '"'.$v.'"';}, $is_pair_para=false);
+    }
     $arguments = join(' ', $arguments);
 
     $cmd = "cd $working_dir; $exports $executable $arguments $extra 2>&1";
