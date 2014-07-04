@@ -8,7 +8,7 @@ require_once 'core/MongoRequest.php';
 class RequestMakerMongo extends BaseNode {
     function __construct() {
     }
-    public function execute(&$req, $res) {
+    public function execute(&$req, &$res) {
         $mongoReq = new MongoRequest($req);
         $params = $req->params;
         $payload = json_decode($req->payload);
