@@ -14,7 +14,7 @@
 class RequestParserJson extends BaseNode {
     function __construct() {
     }
-    public function execute($req, $res) {
+    public function execute(&$req, &$res) {
         $params = $req->getParams();
         $params = $this->modelParams($params);
         $req->setParams($params);

@@ -3,7 +3,7 @@
 class Renderer extends BaseNode {
     function __construct() {
     }
-    public function execute($req, $res) {
+    public function execute(&$req, &$res) {
         $this->next($req, $res);
 
         $debug = DEV_MODE && $req->getDebug();

@@ -11,7 +11,7 @@ require_once 'common/util.php';
 class RestSourceImage extends BaseNode {
     function __construct() {
     }
-    public function execute($req, $res) {
+    public function execute(&$req, &$res) {
         switch ($req->getVerb()) {
             case 'GET':
                 $params = $req->getParams();

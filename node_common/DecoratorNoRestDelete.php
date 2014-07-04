@@ -1,7 +1,7 @@
 <?php
 
 class DecoratorNoRestDelete extends BaseNode {
-    public function execute($req, $res) {
+    public function execute(&$req, &$res) {
         $verb = $req->getVerb();
 
         if (strtolower($verb) !== 'delete') {

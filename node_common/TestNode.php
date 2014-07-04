@@ -5,7 +5,7 @@ require_once 'common/util.php';
 class TestNode extends BaseNode {
     function __construct() {
     }
-    public function execute($req, $res) {
+    public function execute(&$req, &$res) {
         $exec = array(
             'user' => get_process_user()
         );

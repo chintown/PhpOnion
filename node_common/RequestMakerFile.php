@@ -22,7 +22,7 @@ class RequestMakerFile extends BaseNode {
     function __construct() {
 
     }
-    public function execute($req, $res) {
+    public function execute(&$req, &$res) {
 
         $file_info = array();
         if (!empty($_FILES)) {

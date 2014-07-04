@@ -11,7 +11,7 @@ class RequestMaker extends BaseNode {
     function __construct() {
 
     }
-    public function execute($req, $res) {
+    public function execute(&$req, &$res) {
         $this->res = $res;
 
         // de($_GET);
