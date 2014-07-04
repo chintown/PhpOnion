@@ -7,11 +7,9 @@ default_chain:
     - RequestParserJson
 
 # ------------------------------------------------------------------------------
-# fooo
+# ping
 
-#fooo_chain:
-#    - Foo
-#fooo:
-#    - RequestMaker
-#    - ResponseMaker
-#    - TestNode
+#ping_chain:
+#    - (no need)
+ping:
+    - PongNode
