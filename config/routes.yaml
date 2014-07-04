@@ -1,0 +1,21 @@
+# 1. no leading slash
+# 2. `make validate_routes` for testing sample cases
+
+#service1:
+#  patterns:
+#    - path/k1/(?P<v1>.*?)/k2/(?P<v2>.*?)
+#  samples:
+#    - path/k1/123/k2/xyz
+
+#service2:
+#  patterns:
+#    - path/k1/int:v1/k2/alpha:v2
+#  samples:
+#    - path/k1/123/k2/xyz
+#
+
+ping:
+  patterns:
+    - ping/alphanum:msg
+  samples:
+    - test
