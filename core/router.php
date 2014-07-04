@@ -6,10 +6,10 @@ class Router {
     var $routes; // pattern => entry
     var $testCases;
 
-    const REGEX_ANY = "([^/]+?)";
-    const REGEX_INT = "([0-9]+?)";
-    const REGEX_ALPHA = "([a-zA-Z_-]+?)";
-    const REGEX_ALPHANUMERIC = "([0-9a-zA-Z_-]+?)";
+    const REGEX_ANY = "[^/]+";
+    const REGEX_INT = "[0-9]+";
+    const REGEX_ALPHA = "[a-zA-Z_-]+";
+    const REGEX_ALPHANUMERIC = "[0-9a-zA-Z_-]+";
     const REGEX_STATIC = "%s";
 
     public function __construct($file_or_array) {
@@ -44,8 +44,8 @@ class Router {
         $matched_entry = null;
         $matched_params = array();
         foreach ($this->routes as $pattern => $entry) {
-//            var_dump($pattern);
-//            var_dump($raw);
+//            de($pattern);
+//            de($raw);
             preg_match($pattern, $raw, $matches);
             if (empty($matches)) {
                 continue;
@@ -53,8 +53,8 @@ class Router {
             $matched_entry = $entry;
             $matched_params = $this->filterMatchesWithNumericKey($matches);
 
-//            var_dump($matches);
-//            var_dump($matched_params);
+//            de($matches);
+//            de($matched_params);
         }
         $rest_path_params = $matched_params;
         return $matched_entry;
