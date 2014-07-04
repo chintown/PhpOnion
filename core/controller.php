@@ -34,7 +34,8 @@ $res = new Response();
 $services = load_services_manifest();
 $router = new Router(load_routing_manifest());
 $request_uri = preg_replace('@'.SITE_CODE.'/@', '', $_SERVER['REQUEST_URI']);
-$request_uri = array_shift(explode('?', $request_uri));
+$request_uri_tmp = explode('?', $request_uri);
+$request_uri = array_shift($request_uri_tmp);
 ////$request_uri = $_GET['target']; // deprecated
 $entry = $router->parse($request_uri, $rest_path_params)
             or die("Error: invalid routing entry: [".$request_uri."]");
