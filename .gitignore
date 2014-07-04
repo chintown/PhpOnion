@@ -1,7 +1,5 @@
 ## Project specific
 config/pw.php
-config/dev.php
-config/path.php
 
 # PhpStorm specific
 .idea/
