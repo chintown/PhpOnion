@@ -33,10 +33,12 @@ $res = new Response();
 
 $services = load_services_manifest();
 $router = new Router(load_routing_manifest());
-$entry = $router->parse($_GET['target'], $rest_path_params)
-            or die("Error: invalid routing entry: [".$_GET['target']."]");
+//$request_uri = preg_replace('@'.WEB_HOST.WEB_PATH.'@', '', SERVER_HOST.$_SERVER['REDIRECT_URL']);
+$request_uri = $_GET['target'];
+$entry = $router->parse($request_uri, $rest_path_params)
+            or die("Error: invalid routing entry: [".$request_uri."]");
 validate_target_entry($entry, $services)
-            or die("Error: invalid service entry: [".$_GET['target']."]");
+            or die("Error: invalid service entry: [".$request_uri."]");
 list($main_chain_nodes, $sub_chain_nodes) = load_services_nodes($services, $entry);
 $chain_nodes = array_merge($main_chain_nodes, $sub_chain_nodes);
 $node_paths = find_node_paths($chain_nodes, $error) or die($error);
