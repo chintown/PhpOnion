@@ -8,7 +8,16 @@ class Renderer extends BaseNode {
 
         $debug = DEV_MODE && $req->getDebug();
 
-        if ($debug) {
+        if ($debug == 3) {
+            header("Content-Type: text/html; charset=UTF-8");
+            $output = array(
+                'request'=> $req,
+                'response'=> $res,
+                'logs'=> $res->getLogs(),
+                'chain'=> $res->chainLogs,
+            );
+            var_dump($output);
+        } else if ($debug) {
             header("Content-Type: text/html; charset=UTF-8");
             $r_request = $res->dumpRequest();
             $r_response = $res->dumpResponse();

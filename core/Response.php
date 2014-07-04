@@ -71,6 +71,10 @@ class Response {
     public function getFormat() {
         return $this->format;
     }
+    public function getLogs() {
+        return $this->logs;
+    }
+
 
     private function whetherExternal () {
         //$ref = $_SERVER['HTTP_REFERER'];
