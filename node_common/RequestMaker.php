@@ -55,29 +55,36 @@ class RequestMaker extends BaseNode {
         return $parts[0];
     }
     protected function parseParamsBy($verb) {
-        // 1. $_POST does not work
-        // 2. $_GET
-        // array(1) {
-        //     ["target"]=>
-        //     string(33) "meta/key1=a"
-        //      ["key2"]=>
-        //     string(1) "b"
-        // }
-
-        $params = array();
-        $parts = explode('/', $_GET['target'], 2);
-        if (count($parts) == 2) {
-            $param_str = $parts[1];
-            parse_str($param_str, $params);
-        }
-
-        $params = array_merge($params, $_GET);
-        unset($params['target']);
+        $params = $_GET;
         if (isset($params['debug'])) {
             unset($params['debug']);
         }
         return $params;
     }
+//    protected function parseParamsBy($verb) {
+//        // 1. $_POST does not work
+//        // 2. $_GET
+//        // array(1) {
+//        //     ["target"]=>
+//        //     string(33) "meta/key1=a"
+//        //      ["key2"]=>
+//        //     string(1) "b"
+//        // }
+//
+//        $params = array();
+//        $parts = explode('/', $_GET['target'], 2);
+//        if (count($parts) == 2) {
+//            $param_str = $parts[1];
+//            parse_str($param_str, $params);
+//        }
+//
+//        $params = array_merge($params, $_GET);
+//        unset($params['target']);
+//        if (isset($params['debug'])) {
+//            unset($params['debug']);
+//        }
+//        return $params;
+//    }
     private function parsePayload() {
         return file_get_contents('php://input');
     }

@@ -33,8 +33,10 @@ $res = new Response();
 
 $services = load_services_manifest();
 $router = new Router(load_routing_manifest());
-//$request_uri = preg_replace('@'.WEB_HOST.WEB_PATH.'@', '', SERVER_HOST.$_SERVER['REDIRECT_URL']);
-$request_uri = $_GET['target'];
+//de(SERVER_HOST.$_SERVER['REDIRECT_URL']);
+//de('@'.WEB_HOST.SITE_CODE.'/@');
+$request_uri = preg_replace('@'.WEB_HOST.SITE_CODE.'/@', '', SERVER_HOST.$_SERVER['REDIRECT_URL']);
+////$request_uri = $_GET['target']; // deprecated
 $entry = $router->parse($request_uri, $rest_path_params)
             or die("Error: invalid routing entry: [".$request_uri."]");
 validate_target_entry($entry, $services)
