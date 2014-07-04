@@ -20,3 +20,6 @@ remote:
 
 frisby:
 	jasmine-node test/frisby/*_spec.js;
+
+validate_routes:
+	@php -f tool/validate_routes.php
