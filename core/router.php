@@ -6,6 +6,12 @@ class Router {
     var $routes; // pattern => entry
     var $testCases;
 
+    const REGEX_ANY = "([^/]+?)";
+    const REGEX_INT = "([0-9]+?)";
+    const REGEX_ALPHA = "([a-zA-Z_-]+?)";
+    const REGEX_ALPHANUMERIC = "([0-9a-zA-Z_-]+?)";
+    const REGEX_STATIC = "%s";
+
     public function __construct($file_or_array) {
         $this->routes = array();
         $this->testCases = array();
@@ -17,6 +23,7 @@ class Router {
         foreach ($route_manifest as $entry => $profile) {
             foreach ($profile['patterns'] as $pattern) {
 
+                $pattern = $this->convertPatternToRegexp($pattern);
                 $pattern = '&'.$pattern.'&';
                 if (!empty($this->routes[$pattern])) {
                     die("duplicated routes in manifest: ". $pattern);
@@ -39,13 +46,12 @@ class Router {
         foreach ($this->routes as $pattern => $entry) {
 //            var_dump($pattern);
 //            var_dump($raw);
-
             preg_match($pattern, $raw, $matches);
             if (empty($matches)) {
                 continue;
             }
             $matched_entry = $entry;
-            $matched_params = $this->filter_matches_with_numeric_key($matches);
+            $matched_params = $this->filterMatchesWithNumericKey($matches);
 
 //            var_dump($matches);
 //            var_dump($matched_params);
@@ -65,7 +71,7 @@ class Router {
         echo "OK\n";
     }
 
-    private function filter_matches_with_numeric_key($matches) {
+    private function filterMatchesWithNumericKey($matches) {
         $result = array();
         foreach($matches as $key => $val) {
             if (!is_numeric($key)) {
@@ -73,5 +79,38 @@ class Router {
             }
         }
         return $result;
+    }
+
+    private function convertPatternToRegexp($pattern) {
+        $parts = explode('/', $pattern);
+        $regexParts = map($parts, array($this, 'convertPartToRegexp'), false);
+        return implode('/', $regexParts);
+    }
+    public function convertPartToRegexp($part) {
+        $args = explode(':', $part);
+        if (count($args) < 2) { // has no shorthand in pattern. e.g. int:key_name
+            return $part;
+        }
+        $type = $args[0];
+        $name = $args[1];
+        $regexPart = '';
+        switch (strtolower($type)) {
+            case "int":
+            case "integer":
+                $regexPart = self::REGEX_INT;
+                break;
+            case "alpha":
+                $regexPart = self::REGEX_ALPHA;
+                break;
+            case "alphanumeric":
+            case "alphanum":
+            case "alnum":
+                $regexPart = self::REGEX_ALPHANUMERIC;
+                break;
+            default:
+                $regexPart = self::REGEX_ANY;
+                break;
+        }
+        return "(?P<$name>$regexPart)";
     }
 }
