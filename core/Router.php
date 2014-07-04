@@ -22,7 +22,6 @@ class Router {
 
         foreach ($route_manifest as $entry => $profile) {
             foreach ($profile['patterns'] as $pattern) {
-
                 $pattern = $this->convertPatternToRegexp($pattern);
                 $pattern = '&'.$pattern.'&';
                 if (!empty($this->routes[$pattern])) {
@@ -83,7 +82,10 @@ class Router {
 
     private function convertPatternToRegexp($pattern) {
         $parts = explode('/', $pattern);
-        $regexParts = map($parts, array($this, 'convertPartToRegexp'), false);
+        $regexParts = array();
+        foreach ($parts as $part) {
+            $regexParts[] = $this->convertPartToRegexp($part);
+        }
         return implode('/', $regexParts);
     }
     public function convertPartToRegexp($part) {
