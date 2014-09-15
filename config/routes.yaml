@@ -18,4 +18,4 @@ ping:
   patterns:
     - ping/alphanum:msg
   samples:
-    - test
+    - ping/test
