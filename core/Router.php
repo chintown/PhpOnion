@@ -21,6 +21,11 @@ class Router {
                             : $file_or_array;
 
         foreach ($route_manifest as $entry => $profile) {
+            if (empty($profile['patterns'])) {
+                throw new Exception("missing configuration of 'pattern' in '$entry'' entry");
+            } else if (empty($profile['samples'])) {
+                throw new Exception("missing configuration of 'samples' in '$entry'' entry");
+            }
             foreach ($profile['patterns'] as $pattern) {
                 $pattern = $this->convertPatternToRegexp($pattern);
                 $pattern = '&'.$pattern.'&';
