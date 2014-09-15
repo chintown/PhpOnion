@@ -23,7 +23,7 @@ frisby:
 	jasmine-node test/frisby/*_spec.js;
 
 validate_routes:
-	@php -f tool/validate_routes.php
+	@php -f $(ROOT_PARENT)/tool/_validate_routes.php
 
 fork:
 	@echo "backup...";
@@ -48,7 +48,7 @@ fork:
 	mkdir -p $(ROOT_CHILD)/../${name}/tool
 	mkdir -p $(ROOT_CHILD)/../${name}/vendor
 
-	cp $(ROOT_CHILD)/../PhpOnion/.gitignore $(ROOT_CHILD)/../${name}/Makefile
+	cp $(ROOT_CHILD)/../PhpOnion/Makefile $(ROOT_CHILD)/../${name}/Makefile
 	cp $(ROOT_CHILD)/../PhpOnion/.gitignore $(ROOT_CHILD)/../${name}/.gitignore
 
 	@echo "configuring..."
