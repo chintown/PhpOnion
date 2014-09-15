@@ -3,5 +3,5 @@
 $pwd = dirname(__FILE__).'/';
 require $pwd.'../core/main.inc.php';
 require "core/Router.php";
-$r = new Router($pwd."../config/routes.yaml");
+$r = new Router($argv[1]);
 $r->testAll();

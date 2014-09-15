@@ -23,7 +23,7 @@ frisby:
 	jasmine-node test/frisby/*_spec.js;
 
 validate_routes:
-	@php -f $(ROOT_PARENT)/tool/_validate_routes.php
+	@php -f $(ROOT_PARENT)/tool/_validate_routes.php $(ROOT_CHILD)/config/routes.yaml;
 
 fork:
 	@echo "backup...";
