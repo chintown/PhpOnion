@@ -333,7 +333,11 @@ function cols() {
     return implode(', ', $args);
 }
 function set($key, $val) {
-    return cond($key, $val);
+    $cooked = mysql_escape_mimic($val);
+    if (is_string($val)) {
+        $cooked = "'$cooked'";
+    }
+    return cond($key, $cooked);
 }
 function sets() {
     $args = func_get_args();
