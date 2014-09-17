@@ -28,6 +28,90 @@ function pickup() {
     }
     return $picked;
 }
+
+/**
+ * @param array $stack <p>
+ * The raw array.
+ * </p>
+ * @param string|array $expectations <p>
+ * a list of expectation condition
+ * </p>
+ * @see expect
+ *
+ * @throws Exception if any expectaction is mismatched
+ */
+function expect_dict($givens, $expectations) {
+    foreach ($expectations as $field=> $methods) {
+        $actual = $givens[$field];
+
+        if (is_string($methods)) {
+            $methods = explode('|', $methods);
+        }
+        foreach ($methods as $raw_method) {
+            expect($actual, $raw_method, $field);
+        }
+    }
+}
+
+/**
+ * @param $given <p>
+ * Value to be checked
+ * </p>
+ * @param string|callable $expectation <p>
+ *  string - [!]?(empty|string|int|float|numeric|array|json)[?]?
+ *  callable - a predicator which return whether the $given matches expectation
+ * </p>
+ * @param string $given_name
+ * @throws Exception
+ */
+function expect($given, $expectation, $given_name='') {
+    $is_match = false;
+    if (is_string($expectation)) {
+        if (substr($expectation, 0, 1) === '!') {
+            $should_inverse = true;
+            $method = substr($expectation, 1);
+        } else {
+            $should_inverse = false;
+            $method = $expectation;
+        }
+
+        if (substr($method, -1) === '?') {
+            $method = substr($method, 0, -1);
+            $skip_if_empty = true;
+        } else {
+            $skip_if_empty = false;
+        }
+
+        if ($skip_if_empty && empty($given)) {
+            return;
+        }
+
+        if ($method == 'empty') {
+            $is_match = empty($given);
+        } else if ($method == 'string') {
+            $is_match = is_string($given);
+        } else if ($method == 'int') {
+            $is_match = is_int($given);
+        } else if ($method == 'float') {
+            $is_match = is_float($given);
+        } else if ($method == 'numeric') {
+            $is_match = is_numeric($given);
+        } else if ($method == 'array') {
+            $is_match = is_array($given);
+        } else if ($method == 'json') {
+            $is_match = json_decode($given) !== null;
+        }
+        $is_match = $should_inverse ? !$is_match : $is_match;
+    } else if (is_callable($expectation)) {
+        $is_match = $expectation($given);
+    }
+
+    if (!$is_match) {
+        $field_name = $given_name === '' ? 'input' : $given_name;
+        $expectation_name = is_callable($expectation) ? '(customized predicator)' : $expectation;
+        throw new Exception("given $field_name, ".var_export($given, true).", does not match expectation  ".$expectation_name."  .");
+    }
+}
 function not_empty($val) { return !empty($val); }
 function map($arr, $callback, $is_pair_para=true) {
     $res = array();
@@ -36,6 +120,20 @@ function map($arr, $callback, $is_pair_para=true) {
                     ? $callback($k,$v)
                     : $callback($v)
                     ;
+    }
+    return $res;
+}
+function filter($arr, $predicator, $is_pair_para=true) {
+    $res = array();
+    foreach ($arr as $k => $v) {
+        $is_match = ($is_pair_para)
+            ? $predicator($k,$v)
+            : $predicator($v)
+        ;
+        if (!$is_match) {
+            continue;
+        }
+        $res[$k] = $v;
     }
     return $res;
 }
@@ -148,6 +246,17 @@ function purify_values($dict, $methods) {
         $purifieds[$k] = purify($v, $methods);
     }
     return $purifieds;
+}
+function mysql_escape_mimic($inp) {
+    // http://php.net/manual/en/function.mysql-real-escape-string.php
+    if(is_array($inp))
+        return array_map(__METHOD__, $inp);
+
+    if(!empty($inp) && is_string($inp)) {
+        return str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $inp);
+    }
+
+    return $inp;
 }
 /* security */
 
