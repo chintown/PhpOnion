@@ -48,8 +48,10 @@ class Router {
         $matched_entry = null;
         $matched_params = array();
         foreach ($this->routes as $pattern => $entry) {
-//            de($pattern);
-//            de($raw);
+//            var_dump($pattern);
+//            var_dump($raw);
+//            echo "\n";
+
             preg_match($pattern, $raw, $matches);
             if (empty($matches)) {
                 continue;
@@ -57,8 +59,9 @@ class Router {
             $matched_entry = $entry;
             $matched_params = $this->filterMatchesWithNumericKey($matches);
 
-//            de($matches);
-//            de($matched_params);
+//            var_dump($matches);
+//            var_dump($matched_params);
+//            echo "\n";
         }
         $rest_path_params = $matched_params;
         return $matched_entry;
@@ -94,6 +97,13 @@ class Router {
         return implode('/', $regexParts);
     }
     public function convertPartToRegexp($part) {
+        if (substr($part, -1) === '?') {
+            $allow_missing = '?';
+            $part = substr($part, 0, -1);
+        } else {
+            $allow_missing = '';
+        }
+
         $args = explode(':', $part);
         if (count($args) < 2) { // has no shorthand in pattern. e.g. int:key_name
             return $part;
@@ -118,6 +128,6 @@ class Router {
                 $regexPart = self::REGEX_ANY;
                 break;
         }
-        return "(?P<$name>$regexPart)";
+        return "(?P<$name>$regexPart)$allow_missing";
     }
 }
