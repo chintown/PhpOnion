@@ -2,6 +2,9 @@
 
 require_once 'RequestMaker.php';
 
+/**
+ * @deprecated use routing instead
+ */
 class RequestMakerImage extends RequestMaker {
     function __construct() {
     }
