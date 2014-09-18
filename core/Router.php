@@ -6,6 +6,9 @@ class Router {
     var $routes; // pattern => entry
     var $testCases;
 
+    var $lastSuccessRequest;
+    var $lastSuccessPattern;
+
     const REGEX_ANY = "[^/]+";
     const REGEX_INT = "[0-9]+";
     const REGEX_ALPHA = "[a-zA-Z_-]+";
@@ -15,6 +18,9 @@ class Router {
     public function __construct($file_or_array) {
         $this->routes = array();
         $this->testCases = array();
+
+        $this->lastSuccessRequest = '';
+        $this->lastSuccessPattern = '';
 
         $route_manifest = (is_string($file_or_array))
                             ? spyc_load_file($file_or_array)
@@ -28,7 +34,7 @@ class Router {
             }
             foreach ($profile['patterns'] as $pattern) {
                 $pattern = $this->convertPatternToRegexp($pattern);
-                $pattern = '&'.$pattern.'&';
+                $pattern = '&^'.$pattern.'$&'; // full pattern matching is required
                 if (!empty($this->routes[$pattern])) {
                     die("duplicated routes in manifest: ". $pattern);
                 }
@@ -44,12 +50,15 @@ class Router {
         }
     }
 
-    public function parse($raw, &$rest_path_params) {
+    public function parse($raw, &$rest_path_params, $verbose=false) {
         $matched_entry = null;
+        $matched_pattern = null;
         $matched_params = array();
         foreach ($this->routes as $pattern => $entry) {
-//            var_dump($pattern);
+            if ($verbose) { echo "\n";var_dump($pattern); }
+
 //            var_dump($raw);
+//            var_dump($pattern);
 //            echo "\n";
 
             preg_match($pattern, $raw, $matches);
@@ -57,21 +66,27 @@ class Router {
                 continue;
             }
             $matched_entry = $entry;
+            $matched_pattern = $pattern;
             $matched_params = $this->filterMatchesWithNumericKey($matches);
 
-//            var_dump($matches);
-//            var_dump($matched_params);
-//            echo "\n";
+            if ($verbose) { echo ">> MATCHED <<";echo "\n"; }
         }
+        $this->lastSuccessRequest = $raw;
+        $this->lastSuccessPattern = $matched_pattern;
+
         $rest_path_params = $matched_params;
         return $matched_entry;
     }
 
     public function testAll() {
         foreach ($this->testCases as $case => $answer) {
-            $result = $this->parse($case, $params);
+            var_dump("[[[ $case (input) -------------------------------------");
+
+            $result = $this->parse($case, $params, true);
+
+            var_dump("]]] $case (input)");echo "\n";
             if ($result != $answer) {
-                die("mismatched route: \n".$case."\n".$answer."\n");
+                die("mismatched route: \n".$case." (input)\n".$answer." (route entry)\n");
             }
         }
 

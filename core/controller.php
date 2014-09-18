@@ -33,9 +33,11 @@ $res = new Response();
 
 $services = load_services_manifest();
 $router = new Router(load_routing_manifest());
-$request_uri = preg_replace('@'.SITE_CODE.'/@', '', $_SERVER['REQUEST_URI']);
+$sep_index = strpos($_SERVER['REQUEST_URI'], SITE_CODE) + strlen(SITE_CODE);
+$request_uri = substr($_SERVER['REQUEST_URI'], $sep_index + 1); // get path after ".../SITE_CODE/"
 $request_uri_tmp = explode('?', $request_uri);
 $request_uri = array_shift($request_uri_tmp);
+$request_uri = trim($request_uri, '/');
 ////$request_uri = $_GET['target']; // deprecated
 $entry = $router->parse($request_uri, $rest_path_params)
             or die("Error: invalid routing entry: [".$request_uri."]");
@@ -48,6 +50,10 @@ $node_instance = init_node_instances($node_paths, $error) or die($error);
 
 $req->setParams($rest_path_params);
 $res->addChainLog($chain_nodes);
+$res->addChainLog(array(
+    'routing_request'=> $router->lastSuccessRequest,
+    'routing_pattern'=> $router->lastSuccessPattern
+));
 $node_instance[0]->execute($req, $res);
 // -----------------------------------------------------------------------------
 

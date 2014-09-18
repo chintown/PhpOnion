@@ -1,5 +1,6 @@
 # 1. no leading/trailing slash
 # 2. `make validate_routes` for testing sample cases
+# 3. add more pattern to handle optional trailing slash if rule is complex
 
 #service1:
 #  patterns:
