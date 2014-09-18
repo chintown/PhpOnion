@@ -6,6 +6,17 @@ default_chain:
     - RequestMakerMongo
     - RequestParserJson
 
+image_chain:
+    - RequestMaker
+    - RequestMakerFile
+    - DecoratorAllowExternal
+    - DecoratorNoRestPut
+    - DecoratorNoRestDelete
+    - Renderer
+    - ResponseMaker
+    - RestSourceImage
+#image:
+#    - Foo
 # ------------------------------------------------------------------------------
 # ping
 

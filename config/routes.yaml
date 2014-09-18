@@ -1,4 +1,4 @@
-# 1. no leading slash
+# 1. no leading/trailing slash
 # 2. `make validate_routes` for testing sample cases
 
 #service1:
@@ -13,6 +13,17 @@
 #  samples:
 #    - path/k1/123/k2/xyz
 #
+
+image:
+  patterns:
+    - image
+    - image/((?P<thumb_w>\d+)?x(?P<thumb_h>\d+)?/?)?/:filename
+  samples:
+    - image
+    - image//image.jpg
+    - image/100x/image.jpg
+    - image/100x200/image.jpg
+    - image/x/image.jpg
 
 ping:
   patterns:
