@@ -97,17 +97,19 @@ class Router {
         return implode('/', $regexParts);
     }
     public function convertPartToRegexp($part) {
+        $args = explode(':', $part);
+        if (count($args) < 2) { // has no shorthand in pattern. e.g. int:key_name
+            return $part;
+        }
+
         if (substr($part, -1) === '?') {
             $allow_missing = '?';
             $part = substr($part, 0, -1);
         } else {
             $allow_missing = '';
         }
-
         $args = explode(':', $part);
-        if (count($args) < 2) { // has no shorthand in pattern. e.g. int:key_name
-            return $part;
-        }
+
         $type = $args[0];
         $name = $args[1];
         $regexPart = '';
