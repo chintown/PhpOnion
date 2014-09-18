@@ -28,7 +28,8 @@ class RequestMakerFile extends BaseNode {
         if (!empty($_FILES)) {
             if (isset($_FILES[$this->expected_field_name])) {
                 $file_info = $_FILES[$this->expected_field_name];
-                $ext = strtolower(end(explode(".", $file_info["name"])));
+                $file_parts = explode(".", $file_info["name"]);
+                $ext = strtolower(end($file_parts));
                 $file_info['_extension'] = $ext;
                 $file_info['_upload_msg'] = $this->UPLOAD_ERR[$file_info["error"]];
                 if ($file_info['_upload_msg'] === 'UPLOAD_ERR_OK') {
