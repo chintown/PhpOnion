@@ -1,6 +1,7 @@
 <?php
 
 require_once 'common/process.php';
+require_once 'common/file.php';
 require_once 'common/util.php';
 
 /**
@@ -15,8 +16,8 @@ class RestSourceImage extends BaseNode {
         switch ($req->getVerb()) {
             case 'GET':
                 $params = $req->getParams();
-                $w = $params['thumb_w'];
-                $h = $params['thumb_h'];
+                $w = $params['thumb_w'] ? $params['thumb_w'] : 0;
+                $h = $params['thumb_h'] ? $params['thumb_h'] : 0;
 
                 $path_in = IMG_REPO_ROOT . '/raw/' . $params['filename'];
                 if (empty($params['filename'])) {
@@ -38,7 +39,8 @@ class RestSourceImage extends BaseNode {
                     } else if  ($h === 0) {
                         $h = $w;
                     }
-                    $path_out = $this->getThumbFilename(IMG_REPO_ROOT . '/thumb/' . $params['filename'], "${w}x${h}");
+                    $path_repo = $this->getRepoPath('thumb');
+                    $path_out = $this->getThumbFilename($path_repo . '/' . $params['filename'], "${w}x${h}");
                     $process_info = gen_thumbnail($path_in, $path_out, $w, $h, 'GD');
                     $res->addLog($process_info);
                     if (!$process_info['success']) {
@@ -128,8 +130,8 @@ class RestSourceImage extends BaseNode {
         }
         return $return;
     }
-    private function getRepoPath() {
-        $path_repo = IMG_REPO_ROOT . '/raw';
+    private function getRepoPath($sub='raw') {
+        $path_repo = IMG_REPO_ROOT . '/' . $sub;
         if (!file_exists($path_repo)) {
             mkdir($path_repo, 0777, true);
         }
