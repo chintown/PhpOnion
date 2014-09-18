@@ -18,7 +18,8 @@
 image:
   patterns:
     - image
-    - image/((?P<thumb_w>\d+)?x(?P<thumb_h>\d+)?/?)?/:filename
+    - image/:filename
+      - image/(?P<thumb_w>\d+)?x(?P<thumb_h>\d+)?/?/:filename
   samples:
     - image
     - image//image.jpg
