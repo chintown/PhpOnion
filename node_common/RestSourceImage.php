@@ -130,7 +130,7 @@ class RestSourceImage extends BaseNode {
         }
         return $return;
     }
-    private function getRepoPath($sub='raw') {
+    protected function getRepoPath($sub='raw') {
         $path_repo = IMG_REPO_ROOT . '/' . $sub;
         if (!file_exists($path_repo)) {
             mkdir($path_repo, 0777, true);
