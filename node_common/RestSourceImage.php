@@ -127,7 +127,7 @@ class RestSourceImage extends BaseNode {
             $return['success'] = false;
             $return['msg'] = 'can not move file. ' . $file_info['tmp_name'] . ' -> ' . $path_upload;
         } else {
-            $return['path'] = WEB_ROOT . '/image/' . $fn_upload;
+            $return['path'] = $this->getWebPath() . $fn_upload;
         }
         return $return;
     }
@@ -137,6 +137,9 @@ class RestSourceImage extends BaseNode {
             mkdir($path_repo, 0777, true);
         }
         return $path_repo;
+    }
+    protected function getWebPath() {
+        return WEB_ROOT . '/image/';
     }
     private function getThumbFilename($filename, $size) {
         $parts = explode('.', $filename);
