@@ -3,7 +3,7 @@
 class DecoratorAllowCrossDomain extends BaseNode {
     function __construct() {
     }
-    public function execute(&$req, Response &$res) {
+    public function execute(&$req, &$res) {
         $res->addHeaders(array(
             'Access-Control-Allow-Origin'=> '*',
             'Access-Control-Allow-Methods'=> 'GET, PUT, POST, DELETE',
