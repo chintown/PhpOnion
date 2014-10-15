@@ -19,7 +19,8 @@ class RestSourceImage extends BaseNode {
                 $w = $params['thumb_w'] ? $params['thumb_w'] : 0;
                 $h = $params['thumb_h'] ? $params['thumb_h'] : 0;
 
-                $path_in = IMG_REPO_ROOT . '/raw/' . $params['filename'];
+                $path_repo = $this->getRepoPath();
+                $path_in = $path_repo . '/' . $params['filename'];
                 if (empty($params['filename'])) {
                     $res->setStatus(400); // bad request
                     $res->addLog('given empty image');
