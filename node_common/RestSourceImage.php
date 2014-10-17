@@ -18,6 +18,7 @@ class RestSourceImage extends BaseNode {
                 $params = $req->getParams();
                 $w = $params['thumb_w'] ? $params['thumb_w'] : 0;
                 $h = $params['thumb_h'] ? $params['thumb_h'] : 0;
+                $params['filename'] = purify($params['filename'],"urldecode");
 
                 $path_repo = $this->getRepoPath();
                 $path_in = $path_repo . '/' . $params['filename'];
