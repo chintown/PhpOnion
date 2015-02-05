@@ -19,7 +19,7 @@ image:
   patterns:
     - image
     - image/:filename
-      - image/(?P<thumb_w>\d+)?x(?P<thumb_h>\d+)?/?/:filename
+    - image/((?P<thumb_w>\d+)?x(?P<thumb_h>\d+)?)?/:filename
   samples:
     - image
     - image//image.jpg
