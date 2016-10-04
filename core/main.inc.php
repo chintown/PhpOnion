@@ -24,5 +24,5 @@
     $project_path = realpath(dirname(__FILE__).'/../');
     ini_set('include_path', ini_get('include_path') . ':' . $project_path);
     // var_dump(ini_get('include_path'));
-    require '/Users/chintown/src/php/PhpOnion/' . 'core/main.inc.php'; // __PARENT_ROOT__
+    require '/Users/chintown/proj/php/PhpOnion/' . 'core/main.inc.php'; // __PARENT_ROOT__
     //*/

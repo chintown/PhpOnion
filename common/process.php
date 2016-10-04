@@ -5,6 +5,7 @@ require_once 'std.php';
 function execute_external($executable, $arguments, $extra='', $exports=array(), $working_dir='') {
     $exports = map($exports, function($k, $v) {return "$k=$v";});
     $exports = (empty($exports)) ? '' : "export " . join(';', $exports);
+    $exports = 'PATH=$PATH '.$exports;
 
     if (is_assoc($arguments)) {
         $arguments = map($arguments, function($flag, $v) {return "$flag $v";}, $is_pair_para=true);

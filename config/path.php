@@ -9,6 +9,6 @@
     define('WEB_ROOT',    'http://'.SERVER_HOST.WEB_PATH);
 
     define('HOME',        (ENV === 'remote') ? '/home/chintown' : '/Users/chintown');
-    define('FOLDER_ROOT', HOME.'/src/php/'.SITE_CODE.'/');
+    define('FOLDER_ROOT', HOME.'/proj/php/'.SITE_CODE.'/');
 
     define('IMG_REPO_ROOT', '/tmp/');
