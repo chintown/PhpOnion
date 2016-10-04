@@ -113,6 +113,18 @@ class Response {
         if ($format === 'json') {
             header("Content-Type: application/json; charset=UTF-8");
             echo json_encode($this->result);
+        } else if ($format === 'html') {
+            header("Content-Type: text/html; charset=UTF-8");
+            echo '<!DOCTYPE html>
+                <html>
+                    <head>
+                        <title>'.$this->result['title'].'</title>
+                    </head>
+                    <body>
+                        <p>'.$this->result['body'].'</p>
+                    </body>
+                <html>
+            ';
         } else if ($format === 'image') {
             header("Content-Type: ".$this->contentType);
             $result = $this->result;
